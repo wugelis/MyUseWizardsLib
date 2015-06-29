@@ -33,6 +33,9 @@ namespace MyUseWizardsLib
             public string UserId { get; set; }
             public string Password { get; set; }
             public string Initial_Catalog { get; set; }
+            public bool? IntegratedSecurity { get; set; }
+            public bool? UseLocalDB { get; set; }
+            public int AuthType { get; set; }
             /// <summary>
             /// 取得連線字串.
             /// </summary>
@@ -48,12 +51,38 @@ namespace MyUseWizardsLib
                             IsConnect = cw.ShowDialog()==DialogResult.OK; //將對話框的(Yes/No)作為IsConnect狀態值.
                         }
                     }
-                    return string.Format(
-                        "Data Source={0};Initial Catalog={1};User Id={2};Password={3}",
-                        frmORMappingWindow.ConnectionInfo.DataSourceName,
-                        frmORMappingWindow.ConnectionInfo.Initial_Catalog,
-                        frmORMappingWindow.ConnectionInfo.UserId,
-                        frmORMappingWindow.ConnectionInfo.Password);
+                    string result = string.Empty;
+
+                    if (frmORMappingWindow.ConnectionInfo.UseLocalDB.HasValue && frmORMappingWindow.ConnectionInfo.UseLocalDB.Value)
+                    {
+                        result = string.Format(
+                                    "Data Source={0};AttachDbFilename={1};Integrated Security=true",
+                                    frmORMappingWindow.ConnectionInfo.DataSourceName,
+                                    frmORMappingWindow.ConnectionInfo.Initial_Catalog);
+                    }
+                    else
+                    {
+                        switch (frmORMappingWindow.ConnectionInfo.AuthType)
+                        {
+                            case 0: //SQL Server 驗證
+                                result = string.Format(
+                                    "Data Source={0};Initial Catalog={1};User Id={2};Password={3}",
+                                    frmORMappingWindow.ConnectionInfo.DataSourceName,
+                                    frmORMappingWindow.ConnectionInfo.Initial_Catalog,
+                                    frmORMappingWindow.ConnectionInfo.UserId,
+                                    frmORMappingWindow.ConnectionInfo.Password);
+                                break;
+                            case 1: //Windows 驗證
+                                result = string.Format(
+                                    "Data Source={0};Initial Catalog={1};User Id={2};Password={3};Integrated Security=true",
+                                    frmORMappingWindow.ConnectionInfo.DataSourceName,
+                                    frmORMappingWindow.ConnectionInfo.Initial_Catalog,
+                                    frmORMappingWindow.ConnectionInfo.UserId,
+                                    frmORMappingWindow.ConnectionInfo.Password);
+                                break;
+                        }
+                    }
+                    return result;
                 }
             }
         }
@@ -63,6 +92,7 @@ namespace MyUseWizardsLib
             InitializeComponent();
             GetData();
             frmORMappingWindow.ConnectionInfo.WindowCount++;
+            cbAuthType.SelectedIndex = 0;
         }
 
         ~ConnectionWindow()
@@ -88,6 +118,7 @@ namespace MyUseWizardsLib
                 txtUserID.Text = result["UserId"].ToString();
                 cbInitialCatalog.Text = result["InitialCatalogName"].ToString();
                 chkSetDefault.Checked = (bool)result["IsDefault"];
+                chkUseLocalDB.Checked = result["UseLocalDB"] != DBNull.Value ? (bool)result["UseLocalDB"] : false;
             }
         }
 
@@ -118,7 +149,10 @@ namespace MyUseWizardsLib
                     Initial_Catalog = cbInitialCatalog.Text,
                     UserId = txtUserID.Text,
                     Password = txtPassword.Text,
-                    IsConnect = isConnect
+                    IsConnect = isConnect,
+                    IntegratedSecurity = cbAuthType.SelectedIndex == 1,
+                    UseLocalDB = chkUseLocalDB.Checked,
+                    AuthType = cbAuthType.SelectedIndex
                 };
             }
             catch (Exception ex)
@@ -138,6 +172,7 @@ namespace MyUseWizardsLib
                 if (chkSetDefault.Checked)
                     ConnStore.SetIsDefaultByDataSourceName(cbServer.Text);
                 SetConnectionInfo(true);
+                this.DialogResult = DialogResult.OK;
                 this.Dispose();
             }
             catch (Exception ex)
@@ -149,12 +184,41 @@ namespace MyUseWizardsLib
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.No;
             Close();
         }
 
         private void cbInitialCatalog_DropDown(object sender, EventArgs e)
         {
             GetInitialCatalogData();
+        }
+
+        private void cbAuthType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            var selectAuth = cb.SelectedIndex;
+            txtUserID.Enabled = selectAuth == 0;
+            txtPassword.Enabled = selectAuth == 0;
+        }
+
+        protected string OriginalServer = string.Empty;
+        private void chkUseLocalDB_CheckedChanged(object sender, EventArgs e)
+        {
+            OriginalServer = !chkUseLocalDB.Checked ? cbServer.Text : "";
+
+            switch (chkUseLocalDB.Checked)
+            {
+                case true:
+                    cbAuthType.SelectedIndex = 1;
+                    cbServer.Text = @"(LocalDB)\v11.0";
+                    cbServer.Enabled = true;
+                    break;
+                case false:
+                    cbAuthType.SelectedIndex = 1;
+                    cbServer.Text = OriginalServer;
+                    cbServer.Enabled = false;
+                    break;
+            }
         }
     }
 }

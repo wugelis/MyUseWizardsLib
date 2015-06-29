@@ -87,9 +87,9 @@ namespace MyUseWizardsLib
 
             foreach (string node in frmORMappingWindow.SelectedTables)
             {
-                MessageBox.Show(string.Format("node={0}", node));
+                //MessageBox.Show(string.Format("node={0}", node));
                 string ClassName = node.Replace(" ", "_");
-                MessageBox.Show(string.Format("ClassName={0}", ClassName));
+                //MessageBox.Show(string.Format("ClassName={0}", ClassName));
                 ClassDef clsDef = new ClassDef();
                 SQLStore store = new SQLStore();
                 string ClassDefined = ClassDef.GetClassTemplate;
@@ -100,7 +100,7 @@ namespace MyUseWizardsLib
                     Environment.GetEnvironmentVariable("temp"),
                     string.Format("{0}.cs", ClassName));
 
-                MessageBox.Show(TempCSPath);
+                //MessageBox.Show(TempCSPath);
 
                 if(!Directory.Exists(Path.GetDirectoryName(TempCSPath)))
                 {
@@ -210,6 +210,8 @@ namespace MyUseWizardsLib
             finally
             {
                 frmORMappingWindow.ConnectionInfo.IsConnect = false;
+                settingForm.Dispose();
+                settingForm = null;
             }
         }
         #endregion

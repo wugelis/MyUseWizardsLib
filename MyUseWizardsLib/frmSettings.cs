@@ -24,7 +24,15 @@ namespace MyUseWizardsLib
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
+            ClearSelectedTableData();
             CreateRadioButtonList();
+        }
+
+        private void ClearSelectedTableData()
+        {
+            SelectedTableName = string.Empty;
+            SelectedKey = string.Empty;
+            SelectedTableColumns = null;
         }
 
         int y = 20;

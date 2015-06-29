@@ -328,6 +328,14 @@ namespace MyUseWizardsLib.Data {
             
             private global::System.Data.DataColumn columnIsDefault;
             
+            private global::System.Data.DataColumn columnAttachDbFilename;
+            
+            private global::System.Data.DataColumn columnIntegratedSecurity;
+            
+            private global::System.Data.DataColumn columnUseLocalDB;
+            
+            private global::System.Data.DataColumn columnAuthType;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SqlConnectionTableDataTable() {
@@ -419,6 +427,38 @@ namespace MyUseWizardsLib.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AttachDbFilenameColumn {
+                get {
+                    return this.columnAttachDbFilename;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IntegratedSecurityColumn {
+                get {
+                    return this.columnIntegratedSecurity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn UseLocalDBColumn {
+                get {
+                    return this.columnUseLocalDB;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AuthTypeColumn {
+                get {
+                    return this.columnAuthType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -454,7 +494,7 @@ namespace MyUseWizardsLib.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SqlConnectionTableRow AddSqlConnectionTableRow(string ID, string ConnName, string DataSourceName, string InitialCatalogName, string UserId, string Password, bool IsDefault) {
+            public SqlConnectionTableRow AddSqlConnectionTableRow(string ID, string ConnName, string DataSourceName, string InitialCatalogName, string UserId, string Password, bool IsDefault, string AttachDbFilename, bool IntegratedSecurity, bool UseLocalDB, int AuthType) {
                 SqlConnectionTableRow rowSqlConnectionTableRow = ((SqlConnectionTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ID,
@@ -463,7 +503,11 @@ namespace MyUseWizardsLib.Data {
                         InitialCatalogName,
                         UserId,
                         Password,
-                        IsDefault};
+                        IsDefault,
+                        AttachDbFilename,
+                        IntegratedSecurity,
+                        UseLocalDB,
+                        AuthType};
                 rowSqlConnectionTableRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSqlConnectionTableRow);
                 return rowSqlConnectionTableRow;
@@ -493,6 +537,10 @@ namespace MyUseWizardsLib.Data {
                 this.columnUserId = base.Columns["UserId"];
                 this.columnPassword = base.Columns["Password"];
                 this.columnIsDefault = base.Columns["IsDefault"];
+                this.columnAttachDbFilename = base.Columns["AttachDbFilename"];
+                this.columnIntegratedSecurity = base.Columns["IntegratedSecurity"];
+                this.columnUseLocalDB = base.Columns["UseLocalDB"];
+                this.columnAuthType = base.Columns["AuthType"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -512,7 +560,18 @@ namespace MyUseWizardsLib.Data {
                 base.Columns.Add(this.columnPassword);
                 this.columnIsDefault = new global::System.Data.DataColumn("IsDefault", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsDefault);
+                this.columnAttachDbFilename = new global::System.Data.DataColumn("AttachDbFilename", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAttachDbFilename);
+                this.columnIntegratedSecurity = new global::System.Data.DataColumn("IntegratedSecurity", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIntegratedSecurity);
+                this.columnUseLocalDB = new global::System.Data.DataColumn("UseLocalDB", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUseLocalDB);
+                this.columnAuthType = new global::System.Data.DataColumn("AuthType", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAuthType);
                 this.columnConnName.AllowDBNull = false;
+                this.columnIntegratedSecurity.DefaultValue = ((bool)(false));
+                this.columnUseLocalDB.DefaultValue = ((bool)(false));
+                this.columnAuthType.DefaultValue = ((int)(0));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1068,6 +1127,70 @@ namespace MyUseWizardsLib.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AttachDbFilename {
+                get {
+                    try {
+                        return ((string)(this[this.tableSqlConnectionTable.AttachDbFilenameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SqlConnectionTable\' 中資料行 \'AttachDbFilename\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSqlConnectionTable.AttachDbFilenameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IntegratedSecurity {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSqlConnectionTable.IntegratedSecurityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SqlConnectionTable\' 中資料行 \'IntegratedSecurity\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSqlConnectionTable.IntegratedSecurityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool UseLocalDB {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSqlConnectionTable.UseLocalDBColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SqlConnectionTable\' 中資料行 \'UseLocalDB\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSqlConnectionTable.UseLocalDBColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AuthType {
+                get {
+                    try {
+                        return ((int)(this[this.tableSqlConnectionTable.AuthTypeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'SqlConnectionTable\' 中資料行 \'AuthType\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSqlConnectionTable.AuthTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsIDNull() {
                 return this.IsNull(this.tableSqlConnectionTable.IDColumn);
             }
@@ -1136,6 +1259,54 @@ namespace MyUseWizardsLib.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetIsDefaultNull() {
                 this[this.tableSqlConnectionTable.IsDefaultColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAttachDbFilenameNull() {
+                return this.IsNull(this.tableSqlConnectionTable.AttachDbFilenameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAttachDbFilenameNull() {
+                this[this.tableSqlConnectionTable.AttachDbFilenameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsIntegratedSecurityNull() {
+                return this.IsNull(this.tableSqlConnectionTable.IntegratedSecurityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetIntegratedSecurityNull() {
+                this[this.tableSqlConnectionTable.IntegratedSecurityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsUseLocalDBNull() {
+                return this.IsNull(this.tableSqlConnectionTable.UseLocalDBColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetUseLocalDBNull() {
+                this[this.tableSqlConnectionTable.UseLocalDBColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAuthTypeNull() {
+                return this.IsNull(this.tableSqlConnectionTable.AuthTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAuthTypeNull() {
+                this[this.tableSqlConnectionTable.AuthTypeColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Linq;
 
 namespace MyUseWizardsLib.Data
 {
@@ -37,6 +38,55 @@ namespace MyUseWizardsLib.Data
             }
         }
         /// <summary>
+        /// 取得 SQL Statement 內的第一個 TableName.
+        /// </summary>
+        /// <param name="SQLString"></param>
+        /// <returns></returns>
+        private string GetDefaultTableNameBySQL(string SQLString)
+        {
+            string resultTableName = string.Empty;
+            string[] result = SQLString.ToUpper().Split(' ');
+            var resultList = result.AsEnumerable().ToList<string>();
+            int tableIndex = resultList.IndexOf("FROM") + 1;
+
+            if (tableIndex <= 0)
+            {
+                var sqlResult = resultList.Where(c => c.Contains("FROM")).FirstOrDefault();
+                for (int i = 1; i < result.Length - resultList.IndexOf(sqlResult); i++)
+                {
+                    string test = result[resultList.IndexOf(sqlResult) + i];
+                    if (!string.IsNullOrEmpty(test))
+                    {
+                        resultTableName = test;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < result.Length - tableIndex; i++)
+                {
+                    string test = result[tableIndex + i];
+                    if (!string.IsNullOrEmpty(test))
+                    {
+                        resultTableName = test;
+                        break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(resultTableName))
+            {
+                resultTableName = tableIndex <= result.Length - 1 ? result[tableIndex] : "DefaultTableName";
+            }
+            return resultTableName;
+            //int tableIndex = result.AsEnumerable().ToList<string>().IndexOf("FROM") + 1;
+            //if(tableIndex<=0)
+            //    tableIndex = result.AsEnumerable().ToList<string>().IndexOf("\r\nFROM") + 1;
+
+            //return tableIndex <= result.Length - 1 ? result[tableIndex] : "DefaultTableName";
+        }
+        /// <summary>
         /// 執行SQL Statement
         /// </summary>
         /// <param name="SQLString">SQL Statement</param>
@@ -62,7 +112,7 @@ namespace MyUseWizardsLib.Data
                     DataSet ds = new DataSet();
                     try
                     {
-                        da.Fill(ds, "ds");
+                        da.Fill(ds, GetDefaultTableNameBySQL(SQLString));
                         cmd.Parameters.Clear();
                         return ds;
                     }

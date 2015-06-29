@@ -13,7 +13,7 @@ namespace MyUseWizardsLib
 {
     public partial class frmORMappingWindow : Form
     {
-        public static ConnectionWindow.SqlConnectionInfo ConnectionInfo = new ConnectionWindow.SqlConnectionInfo();
+        public static ConnectionWindow.SqlConnectionInfo ConnectionInfo; // = new ConnectionWindow.SqlConnectionInfo();
 
         public frmORMappingWindow()
         {
@@ -22,6 +22,7 @@ namespace MyUseWizardsLib
 
         private void frmORMappingWindow_Load(object sender, EventArgs e)
         {
+            ConnectionInfo = new ConnectionWindow.SqlConnectionInfo();
         }
 
         private static List<string> selectedTables = null;
@@ -90,7 +91,7 @@ namespace MyUseWizardsLib
         private void frmORMappingWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.DialogResult == DialogResult.Cancel)
-                throw new WizardCancelledException();
+                throw new WizardCancelledException("使用者取消作業！");
         }
     }
 }
