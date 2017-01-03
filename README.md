@@ -1,7 +1,11 @@
 # MyUseWizardsLib
 架構設計好簡單系列(3) - 設計自己簡單的 ORM 平台 - (範例與原始碼)
 
+圖(一)、還記得課程『如何有架構性將現有 ASP.NET WebForm 轉換為MVC？ 』，中所使用的範本精靈嗎？
 ![alt tag](https://az787680.vo.msecnd.net/user/gelis/a49826b9-1c94-4354-b542-5491abc53d60/1456626758_60624.jpg)
+
+圖(二)、還記得這個產生 UnitOfWork & Repository 程式碼定義的精靈嗎？
+![alt tag](https://az787680.vo.msecnd.net/user/gelis/a49826b9-1c94-4354-b542-5491abc53d60/1456626724_0411.jpg)
 
 感謝許多人來上小弟的前次課程 『如何有架構性將現有 ASP.NET WebForm 轉換為MVC？ 』，這個課程也開到了第三梯次，小編預計在 2016/03/26 將在開全新的課程 『架構設計好簡單系列 - 設計符合團隊的範本精靈 (Project Template)』，這是小編重新設計的課程，若您沒有聽過小編的前一次『如何有架構性將現有 ASP.NET WebForm 轉換為MVC？ 』課程也沒有關係，因為前一課程比較偏重開發，本課程比較偏重管理面。
 
